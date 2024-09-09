@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS diary (
     title text NOT NULL,
     content text NOT NULL,
     created_at timestamp NOT NULL DEFAULT NOW(),
-    embedding vector(1536) NOT NULL
+    embedding vector(3072) NOT NULL
 );

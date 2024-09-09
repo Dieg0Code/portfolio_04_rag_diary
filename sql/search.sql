@@ -1,5 +1,5 @@
 create or replace function search_diary(
-    query_embedding vector(1536),
+    query_embedding vector(3072),
     similarity_threshold float,
     match_count int
 )
@@ -19,13 +19,13 @@ begin
         diary.title,
         diary.content,
         diary.created_at,
-        1 - (diary.embedding <=> query_embedding) as similarity
+        diary.embedding <#> query_embedding as similarity
     from
         diary
     where
-        1 - (diary.embedding <=> query_embedding) > similarity_threshold
+        diary.embedding <#> query_embedding < similarity_threshold
     order by
-        diary.embedding <=> query_embedding
+        diary.embedding <#> query_embedding
     limit
         match_count;
 end;

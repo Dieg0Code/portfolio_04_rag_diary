@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { DiaryService } from './diary.service';
 import { CreateDiaryDto } from './dto/create-diary.dto';
 import { UpdateDiaryDto } from './dto/update-diary.dto';
+import { SemanticQueryDto } from './dto/semantic-query.dto';
 
 @Controller('diary')
 export class DiaryController {
@@ -9,7 +10,17 @@ export class DiaryController {
 
   @Post()
   create(@Body() createDiaryDto: CreateDiaryDto) {
-    return this.diaryService.create(createDiaryDto);
+    return this.diaryService.create(createDiaryDto);  
+  }
+
+  @Post('semantic-query')
+  semanticQuery(@Body() semanticQueryDto: SemanticQueryDto) {
+    return this.diaryService.semanticSearch(semanticQueryDto.query);
+  }
+
+  @Post('rag')
+  aiResponse(@Body() semanticQuery: SemanticQueryDto) {
+    return this.diaryService.ragResponse(semanticQuery);
   }
 
   @Get()
